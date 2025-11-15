@@ -17,7 +17,7 @@ class Sidebar extends Component
         $this->items = match ($role) {
 
             UserRole::ADMIN => [
-                ['label' => 'Dashboard', 'icon' => 'bi-speedometer2', 'url' => '#'],
+                ['label' => 'Dashboard', 'icon' => 'bi-speedometer2', 'url' => route('dashboard')],
                 ['label' => 'Alunos', 'icon' => 'bi-people-fill', 'url' => '#'],
                 ['label' => 'Instrutores', 'icon' => 'bi-person-badge-fill', 'url' => '#'],
                 ['label' => 'Financeiro', 'icon' => 'bi-cash-stack', 'url' => '#'],
