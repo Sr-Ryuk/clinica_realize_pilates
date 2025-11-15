@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,42 +13,65 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+
 /*
 |--------------------------------------------------------------------------
-| Painel do Administrador
+| Dashboard unificado para TODOS os tipos de usuário
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->get('/dashboard', function () {
+
+    $role = auth()->user()->role->value;
+
+    return match ($role) {
+        'admin'     => view('admin.dashboard'),
+        'instrutor' => view('instrutor.dashboard'),
+        'aluno'     => view('aluno.dashboard'),
+        default     => abort(403, 'Acesso não permitido'),
+    };
+})->name('dashboard');
+
+
+/*
+|--------------------------------------------------------------------------
+| ROTAS EXCLUSIVAS DO ADMIN
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+
+    // futuramente:
+    // Route::resource('alunos', AdminAlunoController::class);
+    // ...
 });
+
 
 /*
 |--------------------------------------------------------------------------
-| Painel do Instrutor (futuro)
+| ROTAS EXCLUSIVAS DE INSTRUTOR
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:instrutor'])->group(function () {
-    Route::get('/instrutor', function () {
-        return 'Painel do Instrutor';
-    })->name('instrutor.dashboard');
+
+    // futuramente:
+    // Route::get('/agenda', ...);
 });
+
 
 /*
 |--------------------------------------------------------------------------
-| Painel do Aluno (futuro)
+| ROTAS EXCLUSIVAS DO ALUNO
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:aluno'])->group(function () {
-    Route::get('/aluno', function () {
-        return 'Painel do Aluno';
-    })->name('aluno.dashboard');
+
+    // futuramente:
+    // Route::get('/minhas-aulas', ...);
 });
+
 
 /*
 |--------------------------------------------------------------------------
-| Área de Perfil (todos os usuários logados podem editar)
+| Perfil (todos os logados)
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
@@ -57,9 +80,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 /*
 |--------------------------------------------------------------------------
-| Autenticação (login, logout, register, forgot)
+| Auth (login, register, etc)
 |--------------------------------------------------------------------------
 */
 require __DIR__ . '/auth.php';
