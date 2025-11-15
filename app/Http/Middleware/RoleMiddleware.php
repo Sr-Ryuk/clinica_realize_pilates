@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Enums\UserRole;
 
 class RoleMiddleware
 {
@@ -16,7 +15,11 @@ class RoleMiddleware
             return redirect()->route('login');
         }
 
-        $userRole = $user->role->value;
+        // Se for enum -> usa value
+        // Se for string -> usa direto
+        $userRole = is_object($user->role) && property_exists($user->role, 'value')
+            ? $user->role->value
+            : $user->role;
 
         if (!in_array($userRole, $roles)) {
             abort(403, 'Acesso negado.');

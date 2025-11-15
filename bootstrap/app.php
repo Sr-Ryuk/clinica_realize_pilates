@@ -7,6 +7,9 @@ use Illuminate\Foundation\Configuration\Middleware;
 // Importação importante para registrar middlewares
 use App\Http\Middleware\RoleMiddleware;
 
+// Importação do comando que você criou
+use App\Console\Commands\DiagnosticoBD;
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
@@ -22,4 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->withCommands([
+        DiagnosticoBD::class, // <-- seu comando Artisan registrado aqui
+    ])
+    ->create();

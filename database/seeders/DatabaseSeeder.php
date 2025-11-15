@@ -17,6 +17,29 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminUserSeeder::class,
+
+            // básicos
+            PlanosSeeder::class,
+            SalasSeeder::class,
+            InstrutorSeeder::class,
+            AlunoSeeder::class,
+            MatriculasSeeder::class,
+
+            // operações
+            AulasSeeder::class,
+            AgendamentosSeeder::class,
+            ListaEsperaSeeder::class,
+
+            // equipamentos
+            EquipamentosSeeder::class,
+            ManutencoesEquipamentosSeeder::class,
+
+            // complementares
+            ContatosEmergenciaSeeder::class,
+            AnamneseSeeder::class,
+            EvolucaoAlunoSeeder::class,
+            RestricoesAlunoSeeder::class,
+            CongelamentosSeeder::class,
         ]);
     }
 }

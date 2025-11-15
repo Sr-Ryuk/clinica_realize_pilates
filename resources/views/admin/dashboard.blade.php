@@ -12,8 +12,10 @@
     <div class="col-12 col-md-3">
         <x-admin.card
             title="Alunos Ativos"
-            value="32"
+            value="{{ $alunosAtivos }}"
             color="primary" />
+
+
     </div>
 
     <div class="col-12 col-md-3">

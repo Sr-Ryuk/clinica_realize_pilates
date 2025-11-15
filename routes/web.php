@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +21,17 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->get('/dashboard', function () {
-
-    $role = auth()->user()->role->value;
+    $user = auth()->user();
+    $role = $user->role; // ← CORRIGIDO
 
     return match ($role) {
-        'admin'     => view('admin.dashboard'),
-        'instrutor' => view('instrutor.dashboard'),
-        'aluno'     => view('aluno.dashboard'),
+        'admin'     => redirect()->route('admin.dashboard'),
+        'instrutor' => redirect()->route('instrutor.dashboard'),
+        'aluno'     => redirect()->route('aluno.dashboard'),
         default     => abort(403, 'Acesso não permitido'),
     };
 })->name('dashboard');
+
 
 
 /*
@@ -38,10 +40,8 @@ Route::middleware(['auth'])->get('/dashboard', function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:admin'])->group(function () {
-
-    // futuramente:
-    // Route::resource('alunos', AdminAlunoController::class);
-    // ...
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
 });
 
 
@@ -51,10 +51,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:instrutor'])->group(function () {
-
-    // futuramente:
-    // Route::get('/agenda', ...);
+    Route::get('/instrutor/dashboard', function () {
+        return view('instrutor.dashboard');
+    })->name('instrutor.dashboard');
 });
+
 
 
 /*
@@ -63,9 +64,9 @@ Route::middleware(['auth', 'role:instrutor'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:aluno'])->group(function () {
-
-    // futuramente:
-    // Route::get('/minhas-aulas', ...);
+    Route::get('/aluno/dashboard', function () {
+        return view('aluno.dashboard');
+    })->name('aluno.dashboard');
 });
 
 

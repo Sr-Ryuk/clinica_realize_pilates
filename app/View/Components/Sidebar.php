@@ -12,7 +12,7 @@ class Sidebar extends Component
 
     public function __construct()
     {
-        $role = Auth::user()?->role ?? UserRole::ADMIN;
+        $role = UserRole::tryFrom(Auth::user()?->role ?? 'admin');
 
         $this->items = match ($role) {
 
