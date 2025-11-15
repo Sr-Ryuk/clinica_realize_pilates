@@ -791,7 +791,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
@@ -801,7 +800,6 @@
             }
         });
 
-        // Smooth scroll
         function scrollTo(target) {
             document.querySelector(target).scrollIntoView({
                 behavior: 'smooth',
@@ -809,7 +807,6 @@
             });
         }
 
-        // Adiciona smooth scroll para links da navbar
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -820,12 +817,13 @@
             });
         });
 
-        // Função para entrar no sistema
         function entrarSistema() {
-            window.location.href = '{{ auth()->check() ? route("admin.dashboard") : route("login") }}';
+            window.location.href =
+                "{{ auth()->check() ? route('dashboard') : route('login') }}";
         }
 
-        // Função para enviar formulário
+
+
         function enviarFormulario(e) {
             e.preventDefault();
             alert('Obrigado pelo contato! Em breve entraremos em contato com você.');
