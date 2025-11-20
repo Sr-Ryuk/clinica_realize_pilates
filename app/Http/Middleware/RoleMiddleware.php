@@ -15,8 +15,6 @@ class RoleMiddleware
             return redirect()->route('login');
         }
 
-        // Se for enum -> usa value
-        // Se for string -> usa direto
         $userRole = is_object($user->role) && property_exists($user->role, 'value')
             ? $user->role->value
             : $user->role;

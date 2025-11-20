@@ -1,13 +1,13 @@
 <?php
 
-namespace App\View\Components\Admin;
+namespace App\View\Components;
 
 use Illuminate\View\Component;
 
 class Card extends Component
 {
-    public string $title;
-    public string $value;
+    public $title;
+    public $value;
     public string $color;
     public string $colorClass;
 
@@ -15,8 +15,8 @@ class Card extends Component
      * Create a new component instance.
      */
     public function __construct(
-        string $title,
-        string $value,
+        $title,
+        $value,
         string $color = 'primary'
     ) {
         $this->title = $title;
@@ -30,6 +30,6 @@ class Card extends Component
      */
     public function render()
     {
-        return view('admin.components.card');
+        return view('components.card');
     }
 }

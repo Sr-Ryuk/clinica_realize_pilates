@@ -4,11 +4,19 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Sala;
+use App\Models\User;
 
 class SalasSeeder extends Seeder
 {
     public function run(): void
     {
+        // Buscar administrador real
+        $admin = User::where('role', 'admin')->first();
+
+        if (!$admin) {
+            return; // evita crash
+        }
+
         $salas = [
             [
                 'nome' => 'Sala Principal',
@@ -31,14 +39,16 @@ class SalasSeeder extends Seeder
         ];
 
         foreach ($salas as $s) {
-            Sala::create([
-                'nome'         => $s['nome'],
-                'capacidade'   => $s['capacidade'],
-                'descricao'    => $s['descricao'],
-                'equipamentos' => $s['equipamentos'],
-                'ativo'        => 1,
-                'criado_por'   => 1,
-            ]);
+            Sala::updateOrCreate(
+                ['nome' => $s['nome']], // chave única
+                [
+                    'capacidade' => $s['capacidade'],
+                    'descricao' => $s['descricao'],
+                    'equipamentos' => json_encode($s['equipamentos']),
+                    'ativo' => 1,
+                    'criado_por' => $admin->id,
+                ]
+            );
         }
     }
 }

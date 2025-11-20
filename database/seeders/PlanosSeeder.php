@@ -4,12 +4,19 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Plano;
-
+use App\Models\User;
 
 class PlanosSeeder extends Seeder
 {
     public function run(): void
     {
+        // Buscar o administrador real
+        $admin = User::where('role', 'admin')->first();
+
+        if (!$admin) {
+            return; // evita crash se o seed de usuário falhar
+        }
+
         $planos = [
             [
                 'nome' => 'Pilates Individual',
@@ -38,12 +45,12 @@ class PlanosSeeder extends Seeder
         ];
 
         foreach ($planos as $p) {
-            Plano::firstOrCreate(
-                ['nome' => $p['nome']],
+            Plano::updateOrCreate(
+                ['nome' => $p['nome']], // chave única
                 array_merge($p, [
                     'duracao_aula'   => 55,
                     'taxa_matricula' => 0,
-                    'criado_por'     => 1
+                    'criado_por'     => $admin->id,
                 ])
             );
         }
