@@ -1,4 +1,4 @@
-<aside id="sidebar" class="sidebar collapsed d-flex flex-column">
+<aside id="sidebar" class="sidebar d-flex flex-column">
 
 
     <nav class="nav flex-column">

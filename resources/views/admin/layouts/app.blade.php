@@ -6,38 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Painel Administrativo') - Realize Pilates</title>
 
-    {{-- Arquivos padrão do painel --}}
+    {{-- Assets padrão --}}
     @vite([
     'resources/js/app.js',
     'resources/css/style.css'
     ])
 
-    {{-- Estilos específicos por página --}}
+    {{-- CSS extra por página --}}
     @stack('styles')
 </head>
 
 <body>
 
-    <!-- SIDEBAR DINÂMICA -->
+    {{-- SIDEBAR --}}
     <x-sidebar />
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <div class="content-area sidebar-collapsed">
+    {{-- ÁREA PRINCIPAL --}}
+    <div class="content-area">
 
-
-        <!-- TOPBAR -->
+        {{-- TOPBAR --}}
         <x-topbar />
 
-        <!-- PÁGINA -->
+        {{-- CONTEÚDO DINÂMICO --}}
         <main class="p-4">
             @yield('content')
         </main>
 
     </div>
 
-    {{-- Scripts específicos por página --}}
-    @stack('app')
+    {{-- SweetAlert2 global --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{-- Scripts específicos de cada página --}}
+    @stack('app')
 
 </body>
 

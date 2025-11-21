@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -18,13 +17,13 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function aluno(): HasOne
+    public function aluno()
     {
-        return $this->hasOne(Aluno::class, 'user_id', 'id');
+        return $this->hasOne(Aluno::class);
     }
 
-    public function instrutor(): HasOne
+    public function instrutor()
     {
-        return $this->hasOne(Instrutor::class, 'usuario_id', 'id');
+        return $this->hasOne(Instrutor::class, 'usuario_id');
     }
 }

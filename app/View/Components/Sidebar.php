@@ -17,20 +17,20 @@ class Sidebar extends Component
         $this->items = match ($role) {
 
             UserRole::ADMIN => [
-                ['label' => 'Dashboard', 'icon' => 'bi-speedometer2', 'url' => route('dashboard')],
-                ['label' => 'Alunos', 'icon' => 'bi-people-fill', 'url' => '#'],
-                ['label' => 'Instrutores', 'icon' => 'bi-person-badge-fill', 'url' => '#'],
-                ['label' => 'Financeiro', 'icon' => 'bi-cash-stack', 'url' => '#'],
+                ['label' => 'Dashboard',     'icon' => 'bi-speedometer2',     'url' => route('admin.dashboard')],
+                ['label' => 'Alunos',        'icon' => 'bi-people-fill',      'url' => route('admin.alunos.index')],
+                ['label' => 'Instrutores',   'icon' => 'bi-person-badge-fill', 'url' => '#'],
+                ['label' => 'Financeiro',    'icon' => 'bi-cash-stack',       'url' => '#'],
             ],
 
             UserRole::INSTRUTOR => [
-                ['label' => 'Agenda', 'icon' => 'bi-calendar-week', 'url' => '#'],
-                ['label' => 'Minhas Turmas', 'icon' => 'bi-people', 'url' => '#'],
+                ['label' => 'Agenda',        'icon' => 'bi-calendar-week',    'url' => route('instrutor.dashboard')],
+                ['label' => 'Minhas Turmas', 'icon' => 'bi-people',           'url' => '#'],
             ],
 
             UserRole::ALUNO => [
-                ['label' => 'Aulas', 'icon' => 'bi-calendar3', 'url' => '#'],
-                ['label' => 'Pagamentos', 'icon' => 'bi-wallet2', 'url' => '#'],
+                ['label' => 'Aulas',         'icon' => 'bi-calendar3',        'url' => route('aluno.dashboard')],
+                ['label' => 'Pagamentos',    'icon' => 'bi-wallet2',          'url' => '#'],
             ],
 
             default => [],
